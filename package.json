@@ -1,0 +1,18 @@
+{
+    "name": "html-webpack-custom-inject",
+    "version": "1.0.0",
+    "description": "enhance html-webpack-plugin for custom inject code fragment",
+    "main": "index.js",
+    "repository": "https://github.com/ixlei/html-webpack-custom-inject.git",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "keywords": [
+        "inject",
+        "html",
+        "webpack",
+        "plugin"
+    ],
+    "author": "ixlei",
+    "license": "ISC"
+}
