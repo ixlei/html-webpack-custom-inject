@@ -50,15 +50,14 @@ module.exports = {
         }),
         new htmlCopyCustomInject({
             inject(chunkId, res) {
-                console.log(chunkId, /index\.html$/.test(chunkId))
-                if (/index\.html$/.test(chunkId)) {
-                    return res.replace(/<!--\s*\[prerender\s*placeholder\]\s*-->/g, function() {
-                        let res = '<div>code fragment you want to inject<div>';
-                        return res;
-                    })
-                }
-                return res;
-            }
+              if (/index\.html$/.test(chunkId)) {
+                  return res.replace(/<!--\s*\[prerender\s*placeholder\]\s*-->/g, function() {
+                      let res = '<div>code fragment you want to inject<div>';
+                      return res;
+                  })
+              }
+              return res;
+          }
         })
   ]
 }
