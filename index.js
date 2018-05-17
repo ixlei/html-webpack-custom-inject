@@ -10,17 +10,35 @@ class HtmlWebpackCustomInject {
                     'htmlWebpackCustomInject',
                     (data, cb) => {
                         if (this.options.inject) {
-                            data.html = this.options.inject(data.outputName, data.html)
+                            data.html = this.options.inject(data.outputName, data.html);
+                            cb(null, data);
+                        } else if (this.options.asyncInject) {
+                            this.options.asyncInject(data.outputName, data.html, (err, res) => {
+                                if (err) {
+                                    return cb(err);
+                                }
+                                cb(null, data.html = res)
+                            })
                         }
-                        cb(null, data);
                     })
             })
         } else {
-            compilation.plugin('html-webpack-plugin-after-html-processing', (data, cb) => {
-                if (this.options.inject) {
-                    data.html = this.options.inject(data.outputName, data.html)
-                }
-                cb(null, data);
+            compiler.plugin('compilation', (compilation) => {
+                compilation.plugin('html-webpack-plugin-after-html-processing', (data, cb) => {
+                    if (this.options.inject) {
+                        data.html = this.options.inject(data.outputName, data.html)
+                        cb(null, data);
+                    } else if (this.options.asyncInject) {
+                        this.options.asyncInject(data.outputName, data.html, (err, res) => {
+                            if (err) {
+                                return cb(err);
+                            }
+                            data.html = res
+                            cb(null, data)
+                        })
+                    }
+
+                })
             })
         }
     }
